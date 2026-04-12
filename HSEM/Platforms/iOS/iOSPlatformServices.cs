@@ -1,6 +1,7 @@
 ﻿using System;
 using HSEM.Platforms.iOS.Services;
 using HSEM.Models;
+using HSEM.Services;
 
 namespace HSEM.Platforms.iOS
 {

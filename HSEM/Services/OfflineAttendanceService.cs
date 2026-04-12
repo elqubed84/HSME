@@ -63,8 +63,14 @@ namespace HSEM.Services
         // =============================================
         //  Attendance CRUD
         // =============================================
-        public Task SaveLocalAsync(LocalAttendanceRecord record)
+
+        // ✅ اسم موحد: SaveAsync
+        public Task SaveAsync(LocalAttendanceRecord record)
             => _db.InsertAsync(record);
+
+        // ✅ Alias للتوافق
+        public Task SaveLocalAsync(LocalAttendanceRecord record)
+            => SaveAsync(record);
 
         public Task<List<LocalAttendanceRecord>> GetPendingAsync()
             => _db.Table<LocalAttendanceRecord>()

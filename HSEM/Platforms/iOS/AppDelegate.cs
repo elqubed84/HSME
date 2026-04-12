@@ -24,7 +24,7 @@ namespace HSEM.Platforms.iOS
             // ===== 1. Firebase Configuration =====
             try
             {
-                App.Configure();
+                Firebase.Core.App.Configure();
                 Console.WriteLine("✅ Firebase configured successfully");
             }
             catch (Exception ex)
@@ -69,19 +69,25 @@ namespace HSEM.Platforms.iOS
             Messaging.SharedInstance.AutoInitEnabled = true;
         }
 
-        public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        // ✅ صحيح: RegisteredForRemoteNotifications
+        [Export("application:didRegisterForRemoteNotificationsWithDeviceToken:")]
+        public void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
             // Set APNs token for FCM
             Messaging.SharedInstance.ApnsToken = deviceToken;
             Console.WriteLine("✅ APNs token set for FCM");
         }
 
-        public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
+        // ✅ صحيح: FailedToRegisterForRemoteNotifications
+        [Export("application:didFailToRegisterForRemoteNotificationsWithError:")]
+        public void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
         {
             Console.WriteLine($"❌ Failed to register for remote notifications: {error}");
         }
 
-        public override void DidReceiveRemoteNotification(
+        // ✅ صحيح: DidReceiveRemoteNotification
+        [Export("application:didReceiveRemoteNotification:fetchCompletionHandler:")]
+        public void DidReceiveRemoteNotification(
             UIApplication application,
             NSDictionary userInfo,
             Action<UIBackgroundFetchResult> completionHandler)

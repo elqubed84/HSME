@@ -9,76 +9,30 @@ namespace HSEM.Platforms.iOS.Services
     /// خدمة WiFi لـ iOS
     /// ⚠️ ملاحظة: iOS لديه قيود صارمة على الوصول لمعلومات WiFi
     /// </summary>
-    public class WifiService
+    public static class WifiService
     {
         /// <summary>
         /// الحصول على SSID الحالي
-        /// ⚠️ لا يعمل في الخلفية - يحتاج Location Permission + Hotspot Configuration Entitlement
+        /// ⚠️ iOS 14+ - غير متاح بدون Hotspot Configuration Entitlement
         /// </summary>
-        public static async Task<string> GetCurrentSSID()
+        public static Task<string> GetCurrentSSID()
         {
-            try
-            {
-                // ⚠️ iOS 13+ يتطلب Location Permission لقراءة SSID
-                // ⚠️ في الخلفية، لا يمكن قراءة SSID بدون entitlements خاصة
+            // ⚠️ iOS 14+ منعت الوصول لـ WiFi SSID بدون entitlement خاص
+            // NEHotspotNetwork.FetchCurrent غير متاح في .NET MAUI
+            // الحل: إرجاع "Unknown" دائماً
 
-                // محاولة الحصول على SSID (قد لا تعمل في جميع الحالات)
-                var interfaces = CaptiveNetwork.GetSupportedInterfaces();
-                if (interfaces != null && interfaces.Length > 0)
-                {
-                    var interfaceInfo = CaptiveNetwork.CopyCurrentNetworkInfo(interfaces[0]);
-                    if (interfaceInfo != null)
-                    {
-                        var ssid = interfaceInfo[CaptiveNetwork.NetworkInfoKeySSID]?.ToString();
-                        if (!string.IsNullOrEmpty(ssid))
-                        {
-                            Console.WriteLine($"📶 Current SSID: {ssid}");
-                            return ssid;
-                        }
-                    }
-                }
-
-                Console.WriteLine("⚠️ Cannot get SSID - iOS restrictions");
-                return "Unknown";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ WiFi error: {ex.Message}");
-                return "Unknown";
-            }
+            Console.WriteLine("⚠️ WiFi SSID not available on iOS without special entitlement");
+            return Task.FromResult("Unknown");
         }
 
         /// <summary>
         /// الحصول على BSSID (MAC Address)
-        /// ⚠️ لا يعمل في الخلفية
+        /// ⚠️ iOS 14+ - غير متاح بدون Hotspot Configuration Entitlement
         /// </summary>
-        public static async Task<string> GetCurrentBSSID()
+        public static Task<string> GetCurrentBSSID()
         {
-            try
-            {
-                var interfaces = CaptiveNetwork.GetSupportedInterfaces();
-                if (interfaces != null && interfaces.Length > 0)
-                {
-                    var interfaceInfo = CaptiveNetwork.CopyCurrentNetworkInfo(interfaces[0]);
-                    if (interfaceInfo != null)
-                    {
-                        var bssid = interfaceInfo[CaptiveNetwork.NetworkInfoKeyBSSID]?.ToString();
-                        if (!string.IsNullOrEmpty(bssid))
-                        {
-                            Console.WriteLine($"📡 Current BSSID: {bssid}");
-                            return bssid;
-                        }
-                    }
-                }
-
-                Console.WriteLine("⚠️ Cannot get BSSID - iOS restrictions");
-                return "Unknown";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ WiFi error: {ex.Message}");
-                return "Unknown";
-            }
+            Console.WriteLine("⚠️ WiFi BSSID not available on iOS without special entitlement");
+            return Task.FromResult("Unknown");
         }
 
         /// <summary>
@@ -151,29 +105,42 @@ namespace HSEM.Platforms.iOS.Services
      * iOS WiFi Limitations - ملاحظات مهمة
      * ═══════════════════════════════════════════════════════════════
      * 
-     * 1. SSID/BSSID Access:
-     *    - يتطلب Location Permission (Always)
-     *    - لا يعمل في الخلفية بدون Hotspot Configuration Entitlement
-     *    - Apple تمنح هذا فقط للتطبيقات المرتبطة بأجهزة شبكات
+     * 1. SSID/BSSID Access في iOS:
+     *    - iOS 14+ منعت CaptiveNetwork APIs بالكامل
+     *    - NEHotspotNetwork.FetchCurrent غير متاح في .NET MAUI
+     *    - يتطلب Hotspot Configuration Entitlement من Apple
+     *    - Apple تمنح هذا فقط لتطبيقات أجهزة WiFi/Routers
      * 
-     * 2. Background Restrictions:
-     *    - iOS 13+ منعت الوصول لمعلومات WiFi في الخلفية
-     *    - حتى مع Permissions، القيم تكون "Unknown"
+     * 2. الحل المطبق:
+     *    - GetCurrentSSID() → يرجع "Unknown" دائماً
+     *    - GetCurrentBSSID() → يرجع "Unknown" دائماً
+     *    - لا محاولة للوصول لـ WiFi APIs
      * 
-     * 3. الحل البديل:
-     *    - استخدام Location فقط للتحقق من نطاق الشركة
-     *    - الاعتماد على GPS بدلاً من WiFi
-     *    - استخدام Internet Connectivity check بدلاً من SSID
+     * 3. ما يعمل في iOS:
+     *    ✅ Internet Connectivity check (IsConnectedToInternet)
+     *    ✅ Connection Type (WiFi vs Cellular)
+     *    ✅ GPS Location
+     *    ✅ Region Monitoring (Geofencing)
      * 
-     * 4. للحصول على Hotspot Configuration Entitlement:
-     *    - يجب أن يكون التطبيق مرتبط بأجهزة Router/Access Points
-     *    - يتطلب موافقة خاصة من Apple
-     *    - غير متاح للتطبيقات العامة
+     * 4. ما لا يعمل في iOS:
+     *    ❌ WiFi SSID
+     *    ❌ WiFi BSSID
+     *    ❌ WiFi Signal Strength
      * 
-     * 5. التوصية:
-     *    - في Android: استخدام WiFi + Location
-     *    - في iOS: استخدام Location فقط
-     *    - قبول أن iOS version لها قيود مختلفة
+     * 5. التوصية للإنتاج:
+     *    - Android: GPS + WiFi SSID للتحقق المزدوج
+     *    - iOS: GPS فقط (Region Monitoring)
+     *    - إعلام المستخدم iOS بهذا القيد عند تسجيل الحضور
+     * 
+     * 6. Implementation في Dashboard:
+     *    #if IOS
+     *    if (requireWifi)
+     *    {
+     *        await ShowAlert("iOS لا يدعم التحقق من WiFi");
+     *        requireWifi = false;
+     *        ssid = "iOS-Disabled";
+     *    }
+     *    #endif
      * 
      * ═══════════════════════════════════════════════════════════════
      */

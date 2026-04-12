@@ -110,8 +110,8 @@ namespace HSEM.Platforms.iOS.Services
             Console.WriteLine($"✅ Region monitoring started: {radiusMeters}m radius");
         }
 
-        // ✅ يتم استدعاؤها عند الدخول للمنطقة
-        public override void DidEnterRegion(CLLocationManager manager, CLRegion region)
+        // ✅ صحيح: RegionEntered
+        public override void RegionEntered(CLLocationManager manager, CLRegion region)
         {
             if (region.Identifier == "CompanyRegion")
             {
@@ -125,8 +125,8 @@ namespace HSEM.Platforms.iOS.Services
             }
         }
 
-        // ✅ يتم استدعاؤها عند الخروج من المنطقة
-        public override void DidExitRegion(CLLocationManager manager, CLRegion region)
+        // ✅ صحيح: RegionLeft
+        public override void RegionLeft(CLLocationManager manager, CLRegion region)
         {
             if (region.Identifier == "CompanyRegion")
             {
