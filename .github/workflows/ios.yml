@@ -2,27 +2,28 @@ name: Build iOS MAUI
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 9.0.x
 
-      - name: Install MAUI workloads
-        run: |
-          dotnet workload install maui
-          dotnet workload restore
+      - run: dotnet workload install maui
 
-      - name: Restore
-        run: dotnet restore
+      - run: dotnet restore
 
-      - name: Build iOS
-        run: dotnet build -f net8.0-ios -c Release
+      - run: dotnet publish -f net9.0-ios -c Release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-build
+          path: |
+            **/bin/Release/**/*
