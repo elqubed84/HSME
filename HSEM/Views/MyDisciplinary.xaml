@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.MyDisciplinary"
+                           xmlns:vm="clr-namespace:HSEM.ViewModels"
+ xmlns:vm1="clr-namespace:HSEM.Converters"
+  xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+                                                     xmlns:model="clr-namespace:HSEM.Models"
+NavigationPage.HasBackButton="False"
+BackgroundColor="#F8F8F8"
+             Title="MyDisciplinary">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:DisciplinaryViewModel />
+    </ContentPage.BindingContext>
+
+    <CollectionView ItemsSource="{Binding Actions}">
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+
+                <Grid ColumnDefinitions="30,*" Padding="10">
+
+                    <!-- Timeline line -->
+                    <StackLayout HorizontalOptions="Center">
+                        <BoxView WidthRequest="2"
+                             VerticalOptions="FillAndExpand"
+                             Color="#174da1"/>
+
+                        <Frame WidthRequest="12"
+                           HeightRequest="12"
+                           CornerRadius="6"
+                           BackgroundColor="#174da1"/>
+                    </StackLayout>
+
+                    <!-- Content -->
+                    <Frame Grid.Column="1"
+                       Margin="5"
+                       Padding="10"
+                       CornerRadius="10"
+                       BackgroundColor="White">
+
+                        <StackLayout>
+                            <Label Text="{Binding level}"
+                               FontAttributes="Bold"
+                               TextColor="#174da1"/>
+
+                            <Label Text="{Binding reason}"
+                               FontSize="12"/>
+
+                            <Label Text="{Binding actionDate}"
+                               FontSize="11"
+                               TextColor="Gray"/>
+
+                            <Label Text="منتهي"
+                               TextColor="Red"
+                               IsVisible="{Binding isExpired}"/>
+                        </StackLayout>
+
+                    </Frame>
+
+                </Grid>
+
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+
+    </CollectionView>
+</ContentPage>

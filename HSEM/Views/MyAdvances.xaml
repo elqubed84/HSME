@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.MyAdvances"
+             xmlns:vm="clr-namespace:HSEM.ViewModels"
+             xmlns:vm1="clr-namespace:HSEM.Converters"
+              xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+               xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+  xmlns:local="clr-namespace:HSEM.Helper"
+                                        xmlns:model="clr-namespace:HSEM.Models"
+NavigationPage.HasBackButton="False"
+BackgroundColor="#F8F8F8"
+             Title="طلباتى">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:MyLoanRequestsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm1:BooleanToColorConverter x:Key="PaymentStatusToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid BackgroundColor="#F8F8F8">
+        <Grid>
+            
+        <ScrollView>
+            <VerticalStackLayout Padding="15" Spacing="15">
+
+                <Label Text="طلبات السلف" 
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#1976D2"/>
+
+                <CollectionView ItemsSource="{Binding MyRequests}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border StrokeShape="RoundRectangle 12"
+                                BackgroundColor="White"
+                                Padding="12"
+                                Margin="0,0,0,10">
+
+                                <Grid RowDefinitions="Auto,Auto,Auto"
+                                  ColumnDefinitions="*,Auto">
+
+                                    <!-- المبلغ و الحالة -->
+                                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
+                                        <Label Text="{Binding AmountText}" 
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="#1976D2"/>
+                                        <Label Text="{Binding StatusText}" 
+                                               FontAttributes="Bold"
+                                               TextColor="{Binding StatusColor}"/>      
+                                    </VerticalStackLayout>
+
+                                    <!-- التاريخ -->
+                                    <Label Grid.Row="0" Grid.Column="1" 
+                                       Text="{Binding DateText}" 
+                                       FontSize="12" 
+                                       TextColor="Gray"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="Start"/>
+
+                                    <!-- تفاصيل الأقساط -->
+                                    <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="1*,1*">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="عدد الأقساط:" FontSize="12" TextColor="Gray"/>
+                                            <Label Text="{Binding Installments}" FontSize="14" TextColor="Black"/>
+                                        </VerticalStackLayout>
+
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                            <Label Text="المتبقي:" FontSize="12" TextColor="Gray"/>
+                                            <Label Text="{Binding RemainingText}" FontSize="14" TextColor="Black"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+
+                                    <!-- شريط صغير أسفل البطاقة -->
+                                    <BoxView Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="2" BackgroundColor="#E0E0E0" Margin="0,8,0,0"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        </Grid>
+        <Grid>
+            
+        <core:SfBusyIndicator IsVisible="{Binding IsBusy}"
+                          IsRunning="{Binding IsBusy}"
+                          Title="جارٍ التحميل..." IndicatorColor="#174DA1" TextColor="#174DA1"
+                          BackgroundColor="#88000000"/>
+        </Grid>
+    </Grid>
+
+
+</ContentPage>

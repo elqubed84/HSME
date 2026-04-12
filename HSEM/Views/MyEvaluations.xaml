@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.MyEvaluations"
+             xmlns:vm="clr-namespace:HSEM.ViewModels"
+             xmlns:model="clr-namespace:HSEM.Models"
+             xmlns:converter="clr-namespace:HSEM.Converters"
+              xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:expander="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
+             x:Name="ThisPage"
+             NavigationPage.HasBackButton="False"
+BackgroundColor="#F8F8F8"
+             Title="تقييماتى السنوية">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:MyEvaluationsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:NotesOrDefaultConverter x:Key="NotesOrDefaultConverter" />
+            <converter:StringNotEmptyToBoolConverter x:Key="StringNotEmptyToBoolConverter" />
+            <converter:StarColorConverter x:Key="StarColorConverter" />
+            <converter:ScoreToPercentageConverter x:Key="ScoreToPercentageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+        <Grid>
+    <ScrollView>
+            <Grid>
+    <VerticalStackLayout Padding="20" Spacing="14">
+
+        <!-- العنوان -->
+        <Label Text="تقييمات الأداء"
+               FontSize="26"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#1976D2"/>
+
+        <!-- اختيار السنة -->
+        <Border StrokeShape="RoundRectangle 16" BackgroundColor="White" Padding="8">
+            <Picker ItemsSource="{Binding Years}"
+                    SelectedItem="{Binding SelectedYear}" TextColor="Black" FontSize="20" FontAttributes="Bold"
+                    Title="اختر السنة" />
+        </Border>
+
+        <!-- زر التحميل -->
+        <buttons:SfButton Text="عرض التقييمات"
+                          Command="{Binding LoadCommand}"
+                          CornerRadius="16"
+                          HeightRequest="48"
+                          Background="#1976D2"
+                          TextColor="White"/>
+
+       
+                    <Label Text="{Binding NoEvaluationsMessage}" 
+       HorizontalOptions="Center" 
+       FontSize="18" 
+       TextColor="Gray"
+       IsVisible="{Binding NoEvaluationsMessage, Converter={StaticResource StringNotEmptyToBoolConverter}}"/>
+
+                    <!-- النتائج -->
+        
+                    <CollectionView ItemsSource="{Binding Evaluations}" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <expander:SfExpander HeaderIconPosition="End"
+                                 HeaderBackground="White"
+                                 Padding="12"
+                                 BackgroundColor="White"
+                                 Margin="0,6">
+
+                                    <!-- Header: ملخص التقييم -->
+                                    <expander:SfExpander.Header>
+                                        <Grid Padding="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- الشهر -->
+                                            <Label Text="{Binding MonthText}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#1976D2"/>
+
+                                            <!-- النجوم -->
+                                            <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="2">
+                                                <Label Text="★" FontSize="24" TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=1}" />
+                                                <Label Text="★" FontSize="24" TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=2}" />
+                                                <Label Text="★" FontSize="24" TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=3}" />
+                                                <Label Text="★" FontSize="24" TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=4}" />
+                                                <Label Text="★" FontSize="24" TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=5}" />
+                                            </StackLayout>
+                                         
+                                        </Grid>
+                                    </expander:SfExpander.Header>
+
+                                    <!-- Content: تفاصيل البنود -->
+                                    <expander:SfExpander.Content>
+                                        <VerticalStackLayout Spacing="8" Padding="12">
+                                            <Label Text="ملاحظات:" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                                            <Label Text="{Binding Notes, Converter={StaticResource NotesOrDefaultConverter}}"
+                               FontSize="16"
+                               TextColor="DarkGreen" />
+
+                                            <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
+                                                <CollectionView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Padding="10"
+                                            BackgroundColor="#F5F5F5"
+                                            StrokeShape="RoundRectangle 10">
+                                                            <VerticalStackLayout Spacing="6">
+
+                                                                <Label Text="{Binding CriteriaName}"
+           FontAttributes="Bold"
+           FontSize="16"
+           TextColor="Black"/>
+
+                                                                <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+
+                                                                    <!-- النجوم -->
+                                                                    <Label Text="★" FontSize="20"
+               TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=1}"/>
+
+                                                                    <Label Text="★" FontSize="20"
+               TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=2}"/>
+
+                                                                    <Label Text="★" FontSize="20"
+               TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=3}"/>
+
+                                                                    <Label Text="★" FontSize="20"
+               TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=4}"/>
+
+                                                                    <Label Text="★" FontSize="20"
+               TextColor="{Binding Score, Converter={StaticResource StarColorConverter}, ConverterParameter=5}"/>
+
+                                                                    <!-- الرقم جنب النجوم -->
+                                                                    <Label Text="{Binding Score}"
+               FontSize="14"
+               Margin="6,0,0,0"/>
+
+
+                                                                </HorizontalStackLayout>
+
+                                                            </VerticalStackLayout>
+
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </CollectionView.ItemTemplate>
+                                            </CollectionView>
+
+                                        </VerticalStackLayout>
+                                    </expander:SfExpander.Content>
+
+                                </expander:SfExpander>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+
+
+
+                </VerticalStackLayout>
+                
+            </Grid>
+    </ScrollView>
+            <Grid>
+        <core:SfBusyIndicator
+x:Name="lOADER"
+Title="برجاء الإنتظار..."
+   FontAttributes="Bold"
+   FontSize="25"
+AnimationType="SingleCircle"
+IndicatorColor="#174DA1"
+IsRunning="{Binding IsBusy}"
+IsVisible="{Binding IsBusy}"
+Style="{StaticResource BlueGradientStyle}"
+TextColor="#174DA1" />
+    </Grid>
+        </Grid>
+</ContentPage>

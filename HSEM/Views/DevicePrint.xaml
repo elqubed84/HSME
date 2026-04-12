@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.DevicePrint"
+                           xmlns:vm="clr-namespace:HSEM.ViewModels"
+ xmlns:vm1="clr-namespace:HSEM.Converters"
+  xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+                                                     xmlns:model="clr-namespace:HSEM.Models"
+NavigationPage.HasBackButton="False"
+             BackgroundColor="#F5F7FA"
+             Title="إدارة البصمات">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:DevicePrintViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"  BackgroundColor="#F5F7FA">
+        <Image Source="bannart.png" HeightRequest="110" Margin="0,5,0,15" />
+        <Label Text="قائمة البصمات" TextColor="Black" Grid.Row="1" FontAttributes="Bold" FontSize="20" HorizontalOptions="Center" />
+        <!-- البحث -->
+        <core:SfTextInputLayout
+            Grid.Row="2"
+            Padding="-10,7,0,0"
+            Hint="📧 "
+            HelperText="ابحث بكود الموظف أو البريد الإلكتروني..."
+            Style="{StaticResource TextInputLayoutStylerr}">
+            <Entry 
+                x:Name="emailEntry"
+                FlowDirection="LeftToRight"
+                Text="{Binding SearchText, Mode=TwoWay}"
+                FontSize="{OnPlatform Android=16}"
+                TextColor="Black"
+                BackgroundColor="#F9FAFB" />
+        </core:SfTextInputLayout>
+
+        <!-- رسالة الحالة -->
+        <Label Grid.Row="3"
+               Text="{Binding SearchStatusMessage}"
+               FontSize="14"
+               TextColor="#6B7280"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="{Binding IsStatusVisible}" />
+
+        <!-- نتائج البحث -->
+        <CollectionView Grid.Row="4"
+                        ItemsSource="{Binding FilteredPrints}"
+                        SelectionMode="None"
+                        IsVisible="{Binding IsListVisible}"
+                        VerticalOptions="FillAndExpand">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="#E5E7EB"
+                            StrokeThickness="1"
+                            Padding="10"
+                            Margin="0,5"
+                            StrokeShape="RoundRectangle 10"
+                            BackgroundColor="#FAFAFA">
+
+                        <Grid ColumnDefinitions="*,Auto"
+                              RowDefinitions="Auto,Auto"
+                              ColumnSpacing="10">
+
+                            <!-- بيانات الموظف -->
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Email}"
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       TextColor="#111827"/>
+                                <Label Text="{Binding EmployeeCode}"
+                                       FontSize="13"
+                                       TextColor="#6B7280"/>
+                            </VerticalStackLayout>
+
+                            <!-- زرار حذف -->
+                            <buttons:SfButton
+                                Grid.Row="8"
+                                HeightRequest="50"
+                                Margin="0,16"
+                                WidthRequest="{OnIdiom Desktop=300,Phone=200}"
+                                HorizontalOptions="Fill"
+                                Style="{StaticResource GradientButtonStyle}"
+                                Text="حذف"
+                                TextColor="White"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ResetCommand}"
+                                CommandParameter="{Binding Id}" />
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Busy Indicator -->
+
+        <core:SfBusyIndicator
+            Grid.RowSpan="5"
+            x:Name="lOADER"
+            Title="برجاء الإنتظار..."
+            FontAttributes="Bold"
+            FontSize="25"
+            AnimationType="SingleCircle"
+            IndicatorColor="#174DA1"
+            IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            Style="{StaticResource BlueGradientStyle}"
+            TextColor="#174DA1" />
+    </Grid>
+    </ScrollView>
+
+</ContentPage>

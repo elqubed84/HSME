@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.PermissionRequest"
+               xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:control="clr-namespace:HSEM.Controls"
+             xmlns:local="clr-namespace:HSEM.ViewModels"
+             NavigationPage.HasBackButton="False"
+             
+             xmlns:model="clr-namespace:HSEM.Models"
+             Title="طلب إذن"
+             BackgroundColor="#F8F8F8">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <local:PermissionRequestViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+</ContentPage.Resources>
+    <Grid>
+
+        <ScrollView>
+
+            <VerticalStackLayout Spacing="0">
+
+                <!-- عنوان علوي -->
+                <Image Grid.Row="0"
+     Source="bannart.png"
+     HeightRequest="120"
+     Margin="0,0,0,15"/>
+
+                <!-- الكارت الرئيسي -->
+                <Border Margin="20,0,20,20"
+                    Padding="20"
+                    Stroke="#2F4F4F"
+                    StrokeThickness="1.5"
+                    BackgroundColor="White">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="18"/>
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="16">
+
+                        <!-- نوع الإذن -->
+                        <Label Text="نوع الإذن"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <core:SfTextInputLayout
+                            Style="{StaticResource TextInputLayoutStylerr}"
+                            ErrorText="اختر نوع الإذن">
+                            <editors:SfComboBox
+                            IsClearButtonVisible="False"
+                            Padding="30,0,0,0"
+                            ItemsSource="{Binding PermissionTypes}"
+                            SelectedItem="{Binding SelectedType}"
+                            Placeholder="اختر نوع الإذن"/>
+                        </core:SfTextInputLayout>
+
+                        <!-- نطاق الإذن -->
+                        <Label Text="نطاق الإذن"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <core:SfTextInputLayout
+                            Style="{StaticResource TextInputLayoutStylerr}"
+                            ErrorText="اختر نطاق الإذن">
+                            <editors:SfComboBox
+                                 IsClearButtonVisible="False"
+                                 Padding="30,0,0,0"
+                            ItemsSource="{Binding PermissionScopes}"
+                            SelectedItem="{Binding SelectedScope}"
+                            Placeholder="اختر نطاق الإذن"/>
+                        </core:SfTextInputLayout>
+
+                        <!-- التاريخ -->
+                        <Label Text="تاريخ الإذن"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <core:SfTextInputLayout
+                            Style="{StaticResource TextInputLayoutStylerr}"
+                            ErrorText="اختر التاريخ">
+                            <DatePicker Date="{Binding Date}"
+                                    TextColor="Black"/>
+                        </core:SfTextInputLayout>
+
+                        <!-- وقت البداية -->
+                        <Label Text="وقت بداية الإذن"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <core:SfTextInputLayout
+                            Style="{StaticResource TextInputLayoutStylerr}"
+                            ErrorText="اختر وقت البداية">
+                            <TimePicker Time="{Binding StartTime}"
+                                    TextColor="Black"/>
+                        </core:SfTextInputLayout>
+
+                        <!-- وقت النهاية -->
+                        <Label Text="وقت نهاية الإذن"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <core:SfTextInputLayout
+                            Style="{StaticResource TextInputLayoutStylerr}"
+                            ErrorText="اختر وقت النهاية">
+                            <TimePicker Time="{Binding EndTime}"
+                                    TextColor="Black"/>
+                        </core:SfTextInputLayout>
+
+                        <!-- ملاحظات -->
+                        <Label Text="ملاحظات"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <core:SfTextInputLayout
+                            Hint="ملاحظات (اختياري)"
+                            Style="{StaticResource TextInputLayoutStylerr}">
+                            <Entry Text="{Binding ManagerNotes}"
+                               Placeholder="ملاحظات إضافية"
+                               TextColor="Black"/>
+                        </core:SfTextInputLayout>
+
+                        <!-- زر الإرسال -->
+                        <buttons:SfButton Text="إرسال الطلب"
+                                      Command="{Binding SubmitCommand}"
+                                      BackgroundColor="#1976D2"
+                                      TextColor="White"
+                                      CornerRadius="14"
+                                      HeightRequest="48"
+                                      Margin="0,10,0,0"/>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+        <!-- اللودر -->
+        <core:SfBusyIndicator
+        IsVisible="{Binding IsBusy}"
+        IsRunning="{Binding IsBusy}" IndicatorColor="#174DA1" TextColor="#174DA1"
+        Title="جارٍ إرسال الطلب..."
+        BackgroundColor="#88000000"/>
+
+    </Grid>
+
+</ContentPage>

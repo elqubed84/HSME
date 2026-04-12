@@ -1,0 +1,8 @@
+admin_sdk.json
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.keystore
+*.keyInfo

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HSEM.ViewModels"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:model="clr-namespace:HSEM.Models"
+             x:Class="HSEM.Views.MyOvertime"
+             Title="طلبات يوم البدل"
+             NavigationPage.HasBackButton="False"
+             BackgroundColor="#F8F8F8">
+    <ContentPage.BindingContext>
+        <vm:MyOvertimeViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout Padding="16" Spacing="12">
+
+        <Label Text="طلبات يوم البدل"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#1976D2"/>
+
+        <buttons:SfButton Text="تحميل الطلبات"
+                Command="{Binding LoadRequestsCommand}"
+                BackgroundColor="#1976D2"
+                TextColor="White"/>
+
+        
+        <core:SfBusyIndicator
+x:Name="lOADER"
+Title="الطلب بيتبعت دلوقتى..."
+   FontAttributes="Bold"
+   FontSize="25"
+AnimationType="SingleCircle"
+IndicatorColor="#174DA1"
+IsRunning="{Binding IsBusy}"
+IsVisible="{Binding IsBusy}"
+Style="{StaticResource BlueGradientStyle}"
+TextColor="#174DA1" />
+
+        <CollectionView ItemsSource="{Binding Requests}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="12" Margin="0,0,0,10" BackgroundColor="White" StrokeShape="RoundRectangle 12">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="{Binding WorkDate, StringFormat='تاريخ يوم البدل: {0:dd/MM/yyyy}'}"
+                                   FontAttributes="Bold" TextColor="#1976D2"/>
+
+                            <Label Text="{Binding Description}" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="الحالة:" FontAttributes="Bold" TextColor="Black" FontSize="15"/>
+                                <Label Text="{Binding Status}" TextColor="OrangeRed" />
+                            </HorizontalStackLayout>
+
+                            <Label Text="{Binding CreatedAt, StringFormat='تاريخ الإنشاء: {0:dd/MM/yyyy}'}"
+                                   FontSize="15" TextColor="Black"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>

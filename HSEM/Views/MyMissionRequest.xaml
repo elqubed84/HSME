@@ -1,0 +1,101 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.MyMissionRequest"
+             xmlns:vm="clr-namespace:HSEM.ViewModels"
+             xmlns:model="clr-namespace:HSEM.Models"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             BackgroundColor="#F8F8F8"
+             Title="مأمورياتي">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:MyMissionViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Image Grid.Row="0"
+               Source="bannart.png"
+               HeightRequest="120"
+               Margin="0,0,0,15"/>
+
+        <Border Grid.Row="1"
+                Margin="20,0,20,20"
+                Stroke="#2F4F4F"
+                StrokeThickness="1.5"
+                BackgroundColor="White">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="18"/>
+            </Border.StrokeShape>
+
+            <CollectionView ItemsSource="{Binding MyMissions}"
+                            SelectionMode="None">
+
+                <!-- Header -->
+                <CollectionView.Header>
+                    <Grid ColumnDefinitions="1*,1*,1*"
+                          Padding="12"
+                          BackgroundColor="#F0F0F0">
+
+                        <Label Text="التاريخ"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
+
+                        <Label Text="الوقت"
+                               Grid.Column="1"
+                               HorizontalTextAlignment="Center"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
+
+                        <Label Text="الحالة"
+                               Grid.Column="2"
+                               HorizontalTextAlignment="End"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
+                    </Grid>
+                </CollectionView.Header>
+
+                <!-- Rows -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="1*,1*,1*"
+                              Padding="12">
+
+                            <Label Text="{Binding MissionDateText}"
+                                   TextColor="Black"/>
+
+                            <Label Text="{Binding TimeRange}"
+                                   Grid.Column="1"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="Black"/>
+
+                            <Label Text="{Binding Status}"
+                                   Grid.Column="2"
+                                   HorizontalTextAlignment="End"
+                                   TextColor="Black"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </Border>
+
+        <core:SfBusyIndicator
+            IsVisible="{Binding IsBusy}"
+            IsRunning="True" TextColor="#174DA1"
+            Title="جارٍ تحميل البيانات..."
+            IndicatorColor="#174DA1"
+            BackgroundColor="#88000000"/>
+    </Grid>
+</ContentPage>

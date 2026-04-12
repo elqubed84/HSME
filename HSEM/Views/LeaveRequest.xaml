@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.LeaveRequest"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+              xmlns:local="clr-namespace:HSEM.Helper"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+               xmlns:datePicker="clr-namespace:Syncfusion.Maui.Picker;assembly=Syncfusion.Maui.Picker"
+                           xmlns:model="clr-namespace:HSEM.Models"
+             
+NavigationPage.HasBackButton="False"
+BackgroundColor="#F8F8F8" 
+             Title="إنشاء طلب إجازة">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:LeaveTypeToArabicConverter x:Key="LeaveTypeConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+
+            <ScrollView>
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- الهيدر -->
+                    <Image Source="bannart.png"
+                       HeightRequest="120"
+                       
+                       Margin="0,0,0,20"/>
+
+                    <!-- الكارت الرئيسي -->
+                    <Border Stroke="#2F4F4F"
+                        StrokeThickness="1.5"
+                        BackgroundColor="White"
+                        Margin="20,0,20,20"
+                        Padding="20">
+
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="18"/>
+                        </Border.StrokeShape>
+
+                        <VerticalStackLayout Spacing="10">
+
+
+                            <!-- نوع الإجازة -->
+                            <Label Text="نوع الإجازة" TextColor="Black"/>
+                            <core:SfTextInputLayout ErrorText="اختر نوع الإجازة"
+                                                Style="{StaticResource TextInputLayoutStylerr}">
+                                <Picker x:Name="LeaveTypePicker"
+                                    TextColor="Black"
+                                    ItemDisplayBinding="{Binding ., Converter={StaticResource LeaveTypeConverter}}"/>
+                            </core:SfTextInputLayout>
+
+                            <!-- تاريخ البداية -->
+                            <Label Text="تاريخ بداية الإجازة" TextColor="Black"/>
+                            <core:SfTextInputLayout ErrorText="اختر تاريخ البداية"
+                                                Style="{StaticResource TextInputLayoutStylerr}">
+                                <DatePicker x:Name="StartDatePicker" TextColor="Black"/>
+                            </core:SfTextInputLayout>
+
+                            <!-- تاريخ النهاية -->
+                            <Label Text="تاريخ نهاية الإجازة" TextColor="Black"/>
+                            <core:SfTextInputLayout ErrorText="اختر تاريخ النهاية"
+                                                Style="{StaticResource TextInputLayoutStylerr}">
+                                <DatePicker x:Name="EndDatePicker" TextColor="Black"/>
+                            </core:SfTextInputLayout>
+
+                            <!-- المرفقات -->
+                            <Label Text="المرفقات" TextColor="Black"/>
+                            <core:SfTextInputLayout Hint="مرفق (اختياري)"
+                                                Style="{StaticResource TextInputLayoutStylerr}">
+                                <Entry x:Name="AttachmentEntry"
+                                   Placeholder="اختيار ملف"
+                                   IsReadOnly="True"/>
+                            </core:SfTextInputLayout>
+
+                            <buttons:SfButton Text="رفع الملف"
+                                          Margin="0,10,0,0"
+                                          Clicked="OnSelectAttachmentClicked"
+                                          CornerRadius="14"/>
+
+                            <buttons:SfButton Text="إرسال الطلب"
+                                          Clicked="OnSubmitClicked"
+                                          BackgroundColor="#1976D2"
+                                          TextColor="White"
+                                          CornerRadius="14"/>
+
+                        </VerticalStackLayout>
+
+                    </Border>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- اللودر -->
+            <core:SfBusyIndicator x:Name="Loader"
+                              IsVisible="False"
+                                  AnimationType="SingleCircle"
+                              IsRunning="True"
+                              Title="جارٍ إرسال الطلب..."
+                              IndicatorColor="#174DA1"
+                              TextColor="#174DA1"
+                              Style="{StaticResource BlueGradientStyle}"/>
+
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

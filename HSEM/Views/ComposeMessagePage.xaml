@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HSEM.ViewModels"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:Class="HSEM.Views.ComposeMessagePage"
+              xmlns:model="clr-namespace:HSEM.Models"
+ NavigationPage.HasBackButton="False"
+             Title="إنشاء رسالة"
+             BackgroundColor="#F8F8F8">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+
+        <ScrollView Padding="16">
+            <VerticalStackLayout Spacing="16">
+
+                <Frame BackgroundColor="White" Padding="12" CornerRadius="12" HasShadow="True">
+                    <VerticalStackLayout Spacing="6">
+
+                        <Label Text="إلى:" FontAttributes="Bold" TextColor="Black"/>
+
+                        <!-- 👇 في حالة الرد -->
+                        <Label Text="{Binding SelectedReceiver.FullName}"
+               TextColor="#1976D2"
+               FontAttributes="Bold"
+               IsVisible="{Binding ShowReceiverLabel}" />
+
+                        <!-- 👇 في حالة رسالة جديدة -->
+                        <Picker Title="اختر المستلم"
+                ItemsSource="{Binding Receivers}"
+                ItemDisplayBinding="{Binding FullName}"
+                SelectedItem="{Binding SelectedReceiver}"
+                IsVisible="{Binding ShowReceiverPicker}" />
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- الموضوع -->
+                <Frame BackgroundColor="White" Padding="12" CornerRadius="12" HasShadow="True">
+                    <Entry Placeholder="الموضوع" TextColor="Black"
+                           Text="{Binding Subject}" />
+                </Frame>
+
+                <!-- نص الرسالة -->
+                <Frame BackgroundColor="White" Padding="12" CornerRadius="12" HasShadow="True">
+                    <Editor Placeholder="اكتب الرسالة هنا..."
+                            Text="{Binding Body}"
+                            AutoSize="TextChanges" TextColor="Black"
+                            HeightRequest="150"/>
+                </Frame>
+
+                <!-- أزرار الإرسال والعودة -->
+                <HorizontalStackLayout Spacing="12">
+                    <Button Text="إرسال"
+                            BackgroundColor="#1976D2"
+                            TextColor="White"
+                            CornerRadius="20"
+                            Command="{Binding SendCommand}"/>
+                    <Button Text="إلغاء"
+                            BackgroundColor="White"
+                            TextColor="#1976D2"
+                            BorderColor="#1976D2"
+                            BorderWidth="1"
+                            CornerRadius="20"
+                            Command="{Binding CancelCommand}"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Busy Indicator -->
+        <core:SfBusyIndicator
+            Title="جاري إرسال الرسالة..."
+            FontAttributes="Bold"
+            FontSize="20"
+            AnimationType="SingleCircle"
+            IndicatorColor="#174DA1"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Style="{StaticResource BlueGradientStyle}"
+            TextColor="#174DA1" />
+    </Grid>
+</ContentPage>

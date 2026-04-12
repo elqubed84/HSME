@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.NyLeaveRequests"
+             xmlns:vm="clr-namespace:HSEM.ViewModels"
+               xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+              xmlns:model="clr-namespace:HSEM.Models"
+             NavigationPage.HasBackButton="False"
+             BackgroundColor="#F8F8F8"
+             Title="طلبات اجازاتي">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:MyRequestViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- الصورة -->
+        <Image Grid.Row="0"
+           Source="bannart.png"
+           HeightRequest="120"
+           Margin="0,0,0,15"/>
+
+        <!-- الكارت اللي فيه الليستة -->
+        <Border Grid.Row="1"
+            Margin="20,0,20,20"
+            Padding="0"
+            Stroke="#2F4F4F"
+            StrokeThickness="1.5"
+            BackgroundColor="White">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="18"/>
+            </Border.StrokeShape>
+
+            <CollectionView
+            ItemsSource="{Binding MyRequests}"
+            Margin="0"
+            SelectionMode="None">
+
+                <!-- رأس الجدول -->
+                <CollectionView.Header>
+                    <Grid ColumnDefinitions="1*,0.7*,1*,1*"
+                      Padding="12"
+                      BackgroundColor="#F0F0F0">
+
+                        <Label Text="التاريخ"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <Label Text="الأيام"
+                           Grid.Column="1"
+                           HorizontalTextAlignment="Center"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <Label Text="النوع"
+                           Grid.Column="2"
+                           HorizontalTextAlignment="Center"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                        <Label Text="الحالة"
+                           Grid.Column="3"
+                           HorizontalTextAlignment="End"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+                    </Grid>
+                </CollectionView.Header>
+
+                <!-- الصف -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="1*,0.7*,1*,1*"
+                          Padding="12">
+
+                            <Label Text="{Binding CreatedAtDate}"
+                               TextColor="Black"/>
+
+                            <Label Text="{Binding DaysCount}"
+                               Grid.Column="1"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
+
+                            <Label Text="{Binding LeaveType}"
+                               Grid.Column="2"
+                               HorizontalTextAlignment="Center"
+                               TextColor="Black"/>
+
+                            <Label Text="{Binding Status}"
+                               Grid.Column="3"
+                               HorizontalTextAlignment="End"
+                               TextColor="Black"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </Border>
+
+        <!-- اللودر -->
+        <core:SfBusyIndicator
+        IsVisible="{Binding IsBusy}" IndicatorColor="#174DA1" TextColor="#174DA1"
+        IsRunning="True"
+        Title="جارٍ تحميل البيانات..."
+        BackgroundColor="#88000000"/>
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.WelcomePage"
+             BackgroundColor="#F8F8F8"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             Title="Welcome Page">
+
+    <AbsoluteLayout x:Name="rootLayout" HorizontalOptions="Fill" VerticalOptions="Fill">
+        <!-- كل الصور في نفس المكان، مركز الصفحة -->
+        <Image x:Name="ImgFirst" Source="frist.png"
+               WidthRequest="450" HeightRequest="450"
+               AbsoluteLayout.LayoutBounds="0.5,0.5,450,450"
+               AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+        <Image x:Name="ImgSecond" Source="scand.png"
+               WidthRequest="450" HeightRequest="450"
+               AbsoluteLayout.LayoutBounds="0.5,0.5,450,450"
+               AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+        <Image x:Name="ImgThird" Source="third.png"
+               WidthRequest="450" HeightRequest="450"
+               AbsoluteLayout.LayoutBounds="0.5,0.5,450,450"
+               AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+        <Image x:Name="ImgFourth" Source="forth.png"
+               WidthRequest="450" HeightRequest="450"
+               AbsoluteLayout.LayoutBounds="0.5,0.5,450,450"
+               AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+        <Image x:Name="ImgFifth" Source="fifth.png"
+               WidthRequest="450" HeightRequest="450"
+               AbsoluteLayout.LayoutBounds="0.5,0.5,450,450"
+               AbsoluteLayout.LayoutFlags="PositionProportional" />
+    </AbsoluteLayout>
+</ContentPage>

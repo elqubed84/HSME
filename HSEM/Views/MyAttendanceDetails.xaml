@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.MyAttendanceDetails"
+             BackgroundColor="#F8F8F8"
+              NavigationPage.HasBackButton="False"
+             xmlns:model="clr-namespace:HSEM.Models"
+             xmlns:locall="clr-namespace:HSEM.Converters"
+             xmlns:local="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+              xmlns:vm="clr-namespace:HSEM.ViewModels"
+ xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+  xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             Title="{Binding PageTitle}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1"  FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:MyAttendanceDetailsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="WeekendColor">#E0E0E0</Color>
+            <Color x:Key="AbsentColor">#FFCDD2</Color>
+            <Color x:Key="LateColor">#FFF9C4</Color>
+            <Color x:Key="EarlyLeaveColor">#FFE0B2</Color>
+            <Color x:Key="OvertimeColor">#C8E6C9</Color>
+            <Color x:Key="NormalColor">#E3F2FD</Color>
+
+            <locall:AttendanceStatusToColorConverter x:Key="AttendanceStatusToColorConverter"/>
+            <locall:BoolToColorConverter x:Key="BoolToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        
+        <ScrollView>
+            <VerticalStackLayout Padding="12" Spacing="10">
+
+                        <!-- عنوان الصفحة -->
+                <Label Text="{Binding PageTitle}"
+           FontSize="22"
+           FontAttributes="Bold"
+           TextColor="#1976D2"
+           HorizontalOptions="Center"/>
+                <HorizontalStackLayout Spacing="12"
+                       Padding="6"
+                       HorizontalOptions="Center">
+
+                            <!-- إجازة -->
+                            <VerticalStackLayout Spacing="2" HorizontalOptions="Center" Margin="0,0,20,0">
+                                <Frame WidthRequest="15" HeightRequest="15"
+               CornerRadius="3"
+               BackgroundColor="{StaticResource WeekendColor}"
+               HasShadow="False"/>
+                                <Label Text="إجازة" FontSize="12" TextColor="Black" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                            <!-- غائب -->
+                            <VerticalStackLayout Spacing="2" HorizontalOptions="Center" Margin="0,0,20,0">
+                                <Frame WidthRequest="15" HeightRequest="15"
+               CornerRadius="3"
+               BackgroundColor="{StaticResource AbsentColor}"
+               HasShadow="False"/>
+                                <Label Text="غائب" FontSize="12" TextColor="Black" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                            <!-- تأخير -->
+                            <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                <Frame WidthRequest="15" HeightRequest="15"
+               CornerRadius="3"
+               BackgroundColor="{StaticResource LateColor}"
+               HasShadow="False"/>
+                                <Label Text="تأخير" FontSize="12" TextColor="Black" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                            <!-- انصراف مبكر -->
+                            <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                <Frame WidthRequest="15" HeightRequest="15"
+               CornerRadius="3"
+               BackgroundColor="{StaticResource EarlyLeaveColor}"
+               HasShadow="False"/>
+                                <Label Text="انصراف مبكر" FontSize="12" TextColor="Black" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                            <!-- أوفر تايم -->
+                            <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                <Frame WidthRequest="15" HeightRequest="15"
+               CornerRadius="3"
+               BackgroundColor="{StaticResource OvertimeColor}"
+               HasShadow="False"/>
+                                <Label Text="أوفر تايم" FontSize="12" TextColor="Black" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                        </HorizontalStackLayout>
+
+
+
+
+                        <!-- SfListView -->
+                        <local:SfListView ItemsSource="{Binding AttendanceDays}"
+                      SelectionMode="None"
+                      AutoFitMode="Height"
+                      HeightRequest="600">
+
+                            <local:SfListView.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="10" BackgroundColor="#1976D2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="التاريخ" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="1" Text="دخول" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="2" Text="خروج" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="3" Text="تأخير" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="4" Text="انصراف مبكر" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="5" Text="أوفر تايم" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="6" Text="الحالة" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </local:SfListView.HeaderTemplate>
+
+                            <local:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame CornerRadius="8" Margin="2" Padding="6"
+                      BackgroundColor="{Binding ., Converter={StaticResource AttendanceStatusToColorConverter}}"
+>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Text="{Binding DateText}" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding InTimeText}" TextColor="Black" HorizontalOptions="Center"/>
+                                            <Label Grid.Column="2" Text="{Binding OutTimeText}" TextColor="Black" HorizontalOptions="Center"/>
+                                            <Label Grid.Column="3" Text="{Binding LatenessMinutes}" TextColor="Black" HorizontalOptions="Center"/>
+                                            <Label Grid.Column="4" Text="{Binding EarlyLeaveMinutes}" TextColor="Black" HorizontalOptions="Center"/>
+                                            <Label Grid.Column="5" Text="{Binding OvertimeMinutes}" TextColor="Black" HorizontalOptions="Center"/>
+                                            <Label Grid.Column="6" Text="{Binding Status}" TextColor="Black" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </local:SfListView.ItemTemplate>
+
+                        </local:SfListView>
+
+                    </VerticalStackLayout>
+
+            </ScrollView>
+            <!-- Busy Indicator -->
+            <!--<core:SfBusyIndicator x:Name="Loader"
+Title="جارى تحميل المؤثرات..."
+FontAttributes="Bold"
+FontSize="20"
+AnimationType="SingleCircle"
+IndicatorColor="White"
+IsRunning="True"
+IsVisible="True"
+Style="{StaticResource BlueGradientStyle}"
+TextColor="White"
+HorizontalOptions="Center"/>-->
+
+
+        
+    <Grid x:Name="Overlay"
+          BackgroundColor="#88000000"  
+        IsVisible="{Binding IsLoading}"
+          InputTransparent="False">
+        <!-- يمنع التفاعل مع المحتوى أثناء التحميل -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- اجعل الـ BusyIndicator في منتصف الشاشة -->
+        <core:SfBusyIndicator
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            IsVisible="{Binding IsLoading}"
+            IsRunning="{Binding IsLoading}"
+            IndicatorColor="#174DA1"    
+            TextColor="#174DA1"
+            Title="جارٍ التحميل..."
+            FontSize="18"
+            Style="{StaticResource BlueGradientStyle}"
+            AnimationType="SingleCircle"
+            WidthRequest="500"
+            HeightRequest="1000"/>
+    </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HSEM.Views.AdvanceRequest"
+              xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+  xmlns:local="clr-namespace:HSEM.Helper"
+ xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+               xmlns:vm="clr-namespace:HSEM.ViewModels"
+              xmlns:model="clr-namespace:HSEM.Models"
+NavigationPage.HasBackButton="False"
+BackgroundColor="#F8F8F8"
+             Title="طلب سلفة">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:LoanRequestViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+
+        <VerticalStackLayout Spacing="0">
+
+            <!-- الصورة -->
+            <Image Source="bannart.png"
+               HeightRequest="140"
+               Aspect="AspectFit"
+               Margin="0,10,0,20"
+               HorizontalOptions="Center"/>
+
+            <!-- الكارت -->
+            <Border Margin="20,0,20,20"
+                Padding="20"
+                Stroke="#2F4F4F"
+                StrokeThickness="1.5"
+                BackgroundColor="White">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="18"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="طلب سلفة"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+
+                    <!-- مبلغ السلفة -->
+                    <Label Text="مبلغ السلفة" TextColor="Black"/>
+                    <core:SfTextInputLayout 
+                        ErrorText="ادخل مبلغ السلفة"
+                        Style="{StaticResource TextInputLayoutStylerr}">
+                        <Entry Text="{Binding Amount}"
+                           Keyboard="Numeric"
+                           Placeholder="ادخل مبلغ السلفة"
+                           PlaceholderColor="OrangeRed"
+                           TextColor="Black"/>
+                    </core:SfTextInputLayout>
+
+                    <!-- عدد الأقساط -->
+                    <Label Text="عدد الأقساط" TextColor="Black"/>
+                    <core:SfTextInputLayout 
+                        ErrorText="ادخل عدد الأقساط"
+                        Style="{StaticResource TextInputLayoutStylerr}">
+                        <Entry Text="{Binding Installments}"
+                           Keyboard="Numeric"
+                           Placeholder="ادخل عدد الاقساط"
+                           PlaceholderColor="OrangeRed"
+                           TextColor="Black"/>
+                    </core:SfTextInputLayout>
+
+                    <!-- زر الإرسال -->
+                    <buttons:SfButton Text="إرسال الطلب"
+                                  Command="{Binding SubmitCommand}"
+                                  BackgroundColor="#1976D2"
+                                  TextColor="White"
+                                  CornerRadius="14"
+                                  HeightRequest="48"/>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

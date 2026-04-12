@@ -1,0 +1,85 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HSEM"
+             xmlns:local2="clr-namespace:HSEM.Converters"
+              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:Class="HSEM.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Color x:Key="NavBarBackgroundColor">#fdbc47</Color>
+            <Color x:Key="NavBarTextColor">#174da1</Color>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+
+            <Style TargetType="Editor">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+
+            <Style TargetType="Picker">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+
+            <Style TargetType="SearchBar">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+
+            <Style TargetType="DatePicker">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+
+            <Style TargetType="TimePicker">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+            <Style TargetType="buttons:SfButton">
+                <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+            </Style>
+            <!-- ستايل افتراضي لكل NavigationPage -->
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource NavBarBackgroundColor}" />
+                <Setter Property="BarTextColor" Value="{StaticResource NavBarTextColor}" />
+                <Setter Property="Title">
+                    <Setter.Value>
+                        <Label 
+                            FontFamily="Montserrat-SemiBold" 
+                            FontSize="22" 
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!-- الألوان المستخدمة لمطابقة الويب -->
+            <Color x:Key="PrimaryBlue">#0d6efd</Color>
+            <Color x:Key="PrimaryBlueDark">#174da1</Color>
+            <Color x:Key="CardBg">#FFFFFF</Color>
+            <Color x:Key="PageBg">#F0F2F5</Color>
+            <Style x:Key="CardFrame" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="16"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource CardBg}"/>
+                <Setter Property="Margin" Value="14,12"/>
+            </Style>
+            <Style x:Key="SectionHeader" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource PrimaryBlue}"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+            <!-- محول العملة -->
+            <local2:CurrencyConverter x:Key="CurrencyConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,766 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    xmlns:combobox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:control="clr-namespace:HSEM.Controls"
+    xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup">
+    <Color x:Key="BorderBackgroundColor">#20FFFFFF</Color>
+    <Style x:Key="BorderlessEntryStyle" TargetType="control:BorderlessEntry">
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="ReturnType" Value="Done" />
+    </Style>
+    <Style  TargetType="NavigationPage">
+        <Setter Property="Title">
+            <Setter.Value>
+                <Label  FontFamily="Montserrat-SemiBold" 
+ FontSize="22" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+        <Style x:Key="TextInputLayoutStylerr" TargetType="core:SfTextInputLayout">
+       
+        <Setter Property="ContainerType" Value="Outlined" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="OutlineCornerRadius" Value="4" />
+        <Setter Property="ContainerBackground" Value="Transparent" />
+        <Setter Property="ReserveSpaceForAssistiveLabels" Value="False" />
+        <Setter Property="InputViewPadding" Value="12,0,0,0" />
+        <Setter Property="Margin" Value="0,-8,0,0" />
+        <Setter Property="FocusedStrokeThickness" Value="1" />
+        <Setter Property="WidthRequest" Value="300" />
+        <Setter Property="HeightRequest" Value="50" />
+    </Style>
+
+    <Style x:Key="InputLayoutStyleMobile" TargetType="core:SfTextInputLayout">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="Green" />
+                            <Setter Property="ContainerType" Value="Outlined" />
+                            <Setter Property="ContainerType" Value="Outlined" />
+                            <Setter Property="InputViewPadding" Value="0,5,0,5" />
+                            <Setter Property="WidthRequest" Value="300" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState Name="Focused">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="Green" />
+                            <Setter Property="HintLabelStyle">
+                                <core:LabelStyle
+                                    FontFamily="Montserrat-Regular"
+                                    FontSize="16"
+                                    TextColor="ForestGreen" />
+                            </Setter>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState Name="Error">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="Red" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+        <Setter Property="LeadingViewPosition" Value="Outside" />
+        <Setter Property="HeightRequest" Value="76" />
+        <Setter Property="ContainerBackground" Value="Transparent" />
+        <Setter Property="HintLabelStyle">
+            <core:LabelStyle
+                FontFamily="Montserrat-Regular"
+                FontSize="16"
+                TextColor="Black" />
+        </Setter>
+        <Setter Property="HelperLabelStyle">
+            <core:LabelStyle FontFamily="Montserrat-Regular" TextColor="Green" />
+        </Setter>
+        <Setter Property="ErrorLabelStyle">
+            <core:LabelStyle FontFamily="Montserrat-Regular" TextColor="Red" />
+        </Setter>
+
+    </Style>
+
+    <Style x:Key="TextInputLayoutStyle" TargetType="core:SfTextInputLayout">
+        <Setter Property="UnfocusedStrokeThickness" Value="2" />
+        <Setter Property="ContainerType" Value="Outlined" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="OutlineCornerRadius" Value="4" />
+        <Setter Property="ContainerBackground" Value="{DynamicResource Gray-Bg}" />
+        <Setter Property="FocusedStrokeThickness" Value="{DynamicResource Gray-500}" />
+        <Setter Property="ReserveSpaceForAssistiveLabels" Value="False" />
+        <Setter Property="InputViewPadding" Value="12,0,0,0" />
+        <Setter Property="Margin" Value="0,-8,0,0" />
+        <Setter Property="HeightRequest" Value="45" />
+        <Setter Property="FocusedStrokeThickness" Value="1" />
+    </Style>
+    <Style x:Key="SimpleLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+        <Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />
+    </Style>
+    <Style x:Key="TitleLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />
+    </Style>
+    <Style x:Key="DescriptionLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+        <Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />
+    </Style>
+    <Style x:Key="PopupStyle" TargetType="popup:SfPopup">
+        <Setter Property="PopupStyle">
+            <Setter.Value>
+                <popup:PopupStyle
+                    CloseButtonIcon="wrong.png"
+                    CornerRadius="16"
+                    HasShadow="True"
+                    PopupBackground="White" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ThemeBorderStyle" TargetType="Border">
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>
+    <Style x:Key="PopupContentLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="Wheat" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CharacterSpacing" Value="0.24" />
+    </Style>
+    <Style x:Key="DeclineButtonStyle" TargetType="Button">
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BorderColor" Value="#79747E" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="BackgroundColor" Value="Orange" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+        <!--<Setter Property="CharacterSpacing" Value="0.1"/>-->
+    </Style>
+    <Style x:Key="AcceptButtonStyle" TargetType="Button">
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BorderColor" Value="Wheat" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="BackgroundColor" Value="OrangeRed" />
+        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+        <!--<Setter Property="CharacterSpacing" Value="0.1"/>-->
+    </Style>
+    <Style x:Key="ErrorIconLabelStyle" TargetType="Label">
+        <Setter Property="Margin" Value="15,0" />
+        <Setter Property="FontFamily" Value="FontIcons" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+        <Setter Property="HorizontalTextAlignment" Value="End" />
+        <Setter Property="TextColor" Value="Red" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+    <Style x:Key="LoginFormBorderlessEntryBorderStyle" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource BorderBackgroundColor}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 15,15,15,15" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="WidthRequest" Value="320" />
+    </Style>
+
+    <Style x:Key="GradientButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#0056CC" />
+                    <GradientStop Offset="1.0" Color="Purple" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TextColor" Value="LightGray" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="TransparentButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Stroke" Value="Transparent" />
+    </Style>
+
+
+
+    <!--  Common style for Icon buttons  -->
+    <Style x:Key="IconButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="TextColor" Value="#555555" />
+        <Setter Property="BackgroundColor" Value="#22092C" />
+        <Setter Property="FontFamily" Value="FontIcons" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="CornerRadius" Value="20" />
+    </Style>
+
+    <!--  Common style for Simple buttons  -->
+    <Style x:Key="SimpleButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="BackgroundColor" Value="LightGray" />
+        <Setter Property="WidthRequest" Value="155" />
+        <Setter Property="CornerRadius" Value="1" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="#174da1" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+
+    <!--  Font icon text  -->
+    <x:String x:Key="DropDownButtonIcon">&#xe70b;</x:String>
+    <x:String x:Key="Contact">&#xe723;</x:String>
+    <x:String x:Key="FaceBook">&#xe70f;</x:String>
+    <x:String x:Key="Google">&#xe74d;</x:String>
+    <x:String x:Key="Twitter">&#xe749;</x:String>
+    <x:String x:Key="Filter">&#xe702;</x:String>
+    <x:String x:Key="Sort">&#xe70a;</x:String>
+    <x:String x:Key="BurgerMenu">&#xe72e;</x:String>
+    <x:String x:Key="Favourite">&#xe701;</x:String>
+    <x:String x:Key="Share">&#xe704;</x:String>
+    <x:String x:Key="MapPin">&#xe729;</x:String>
+    <x:String x:Key="Calendar">&#xe742;</x:String>
+    <x:String x:Key="Group">&#xe714;</x:String>
+    <x:String x:Key="Search">&#xe705;</x:String>
+    <x:String x:Key="Phone">&#xe71c;</x:String>
+    <x:String x:Key="Sent">&#xe717;</x:String>
+    <x:String x:Key="Viewed">&#xe71b;</x:String>
+    <x:String x:Key="New">&#xe720;</x:String>
+    <x:String x:Key="Audio">&#xe722;</x:String>
+    <x:String x:Key="Photo">&#xe71d;</x:String>
+    <x:String x:Key="Video">&#xe718;</x:String>
+    <x:String x:Key="Next">&#xe71a;</x:String>
+    <x:String x:Key="Mail">&#xe725;</x:String>
+    <x:String x:Key="Notification">&#xe700;</x:String>
+    <x:String x:Key="Help">&#xe72c;</x:String>
+    <x:String x:Key="Edit">&#xe727;</x:String>
+    <x:String x:Key="PhoneFill">&#xe72a;</x:String>
+    <x:String x:Key="Close">&#xe724;</x:String>
+    <x:String x:Key="Home">&#xe706;</x:String>
+    <x:String x:Key="FileExplorerList">&#xe70d;</x:String>
+    <x:String x:Key="Account">&#xe70e;</x:String>
+    <x:String x:Key="Rating">&#xe70c;</x:String>
+    <x:String x:Key="ArrowRight">&#xe728;</x:String>
+    <x:String x:Key="Photos">&#xe731;</x:String>
+    <x:String x:Key="AlbumsIcon">&#xe726;</x:String>
+    <x:String x:Key="Settings">&#xe72b;</x:String>
+    <x:String x:Key="Music">&#xe744;</x:String>
+    <x:String x:Key="WhatsApp">&#xe748;</x:String>
+    <x:String x:Key="Messages">&#xe73b;</x:String>
+    <x:String x:Key="FileExplorer">&#xe74a;</x:String>
+    <x:String x:Key="Delete">&#xe716;</x:String>
+    <x:String x:Key="Bookmark">&#xe734;</x:String>
+    <x:String x:Key="More">&#xe719;</x:String>
+    <x:String x:Key="Back">&#xe709;</x:String>
+    <x:String x:Key="VideoCall">&#xe721;</x:String>
+    <x:String x:Key="Camera">&#xe713;</x:String>
+    <x:String x:Key="Attachment">&#xe71e;</x:String>
+    <x:String x:Key="Send">&#xe71f;</x:String>
+    <x:String x:Key="Delivered">&#xe741;</x:String>
+    <x:String x:Key="Offer">&#xe736;</x:String>
+    <x:String x:Key="FlashSale">&#xe743;</x:String>
+    <x:String x:Key="Arrived">&#xe740;</x:String>
+    <x:String x:Key="Add">&#xe730;</x:String>
+    <x:String x:Key="Cart">&#xe708;</x:String>
+    <x:String x:Key="Menu">&#xe715;</x:String>
+    <x:String x:Key="Category">&#xe733;</x:String>
+    <x:String x:Key="Error">&#xe707;</x:String>
+    <Style TargetType="ActivityIndicator">
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+    </Style>
+
+    <Style TargetType="IndicatorView">
+        <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+        <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}" />
+    </Style>
+
+    <Style x:Key="BlueGradientStyle" TargetType="ContentPage">
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="1,0">
+                    <GradientStop Color="#F8F8F8" Offset="0"/>
+                    <GradientStop Color="#EDEFF3" Offset="0.5"/>
+                    <GradientStop Color="#DDE2E8" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="Orange" />
+                    <GradientStop Offset="0.4" Color="DarkOrange" />
+                    <GradientStop Offset="0.8" Color="OrangeRed" />
+                    <GradientStop Offset="1.0" Color="Red" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PageStyle" TargetType="Grid">
+        <Setter Property="Opacity" Value="0.82" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#c4e1c5" />
+                    <GradientStop Offset="1.0" Color="#c4e1c5" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LoaderStyle" TargetType="core:SfBusyIndicator">
+
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#22092C" />
+                    <GradientStop Offset="0.4" Color="#872341" />
+                    <GradientStop Offset="0.8" Color="#BE3144" />
+                    <GradientStop Offset="1.0" Color="#F05941" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="Border">
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+        <Setter Property="StrokeShape" Value="Rectangle" />
+        <Setter Property="StrokeThickness" Value="1" />
+    </Style>
+
+    <Style TargetType="BoxView">
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="CheckBox">
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="DatePicker">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Editor">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Entry">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Frame">
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="CornerRadius" Value="8" />
+    </Style>
+
+    <Style TargetType="ImageButton">
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListView">
+        <Setter Property="SeparatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+        <Setter Property="RefreshControlColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="Picker">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ProgressBar">
+        <Setter Property="ProgressColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="ProgressColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="RadioButton">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="RefreshView">
+        <Setter Property="RefreshColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="SearchBar">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
+        <Setter Property="CancelButtonColor" Value="{StaticResource Gray500}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="SearchHandler">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Shadow">
+        <Setter Property="Radius" Value="15" />
+        <Setter Property="Opacity" Value="0.5" />
+        <Setter Property="Brush" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
+        <Setter Property="Offset" Value="10,10" />
+    </Style>
+
+    <Style TargetType="Slider">
+        <Setter Property="MinimumTrackColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="MaximumTrackColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+        <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="MinimumTrackColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="MaximumTrackColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="SwipeItem">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+    </Style>
+
+    <Style TargetType="Switch">
+        <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="ThumbColor" Value="{StaticResource White}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="On">
+                        <VisualState.Setters>
+                            <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Off">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="TimePicker">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TransparentSelectionListView" TargetType="listView:SfListView">
+        <Setter Property="BackgroundColor" Value="Red" />
+
+        <Setter Property="SelectionBackground" Value="Transparent" />
+        <Setter Property="ScrollBarVisibility" Value="Always" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <Style ApplyToDerivedTypes="True" TargetType="Page">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+    </Style>
+
+    <Style ApplyToDerivedTypes="True" TargetType="Shell">
+        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}" />
+        <Setter Property="Shell.ForegroundColor" Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
+        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}" />
+        <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+
+
+    <Style TargetType="TabbedPage">
+        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
+        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1029471485614",
+    "project_id": "elnagary-c7af7",
+    "storage_bucket": "elnagary-c7af7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029471485614:android:dd022fc20d2db167ad773f",
+        "android_client_info": {
+          "package_name": "com.extrateam.elnagary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5DPPhgIRLo32e8EbeXketAMsmc3D38c0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

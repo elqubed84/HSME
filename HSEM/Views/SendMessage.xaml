@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HSEM.ViewModels"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:model="clr-namespace:HSEM.Models"
+             x:Class="HSEM.Views.SendMessage"
+             Title="إرسال رسالة"
+             NavigationPage.HasBackButton="False"
+             BackgroundColor="#F8F8F8">
+
+    <ContentPage.BindingContext>
+        <vm:SendMessageViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.Arrow_forward}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem x:Name="menuu" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Color="#174da1" FontFamily="Icon" Glyph="{x:Static model:IconFont.More_vert}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <Grid>
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="1">
+            <Image Source="bannart.png"
+     HeightRequest="120"
+     
+     Margin="0,0,0,20"/>
+            <!-- الكارت الرئيسي -->
+            <Border Stroke="#2F4F4F"
+       StrokeThickness="1.5"
+       BackgroundColor="White"
+       Margin="20,0,20,20"
+       Padding="20">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="18"/>
+                </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="10">
+                        
+                        
+                        <Label Text="إرسال رسالة"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#1976D2"/>
+
+                        <Label Text="المرسل اليه" TextColor="Black"/>
+                        <core:SfTextInputLayout Hint=""
+                     Style="{StaticResource TextInputLayoutStyle}">
+                            <Entry x:Name="SearchEntry"  TextChanged="OnSearchChanged" TextColor="Black"  Placeholder="ابحث باسم / كود / ايميل"/>
+                        </core:SfTextInputLayout>
+                        <!-- Search -->
+         
+
+            <!-- اقتراحات الموظفين -->
+            <CollectionView ItemsSource="{Binding Employees}"
+                        HeightRequest="150"
+                        SelectionMode="Single"
+                        SelectionChanged="OnEmployeeSelected"
+                              IsVisible="{Binding ShowSuggestions}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="8">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEmployeeTapped"/>
+                            </Frame.GestureRecognizers>
+                            <StackLayout>
+                                <Label Text="{Binding fullName}" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding employeeCode}" FontSize="11" TextColor="Black"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+                        <Label Text="الموضوع" TextColor="Black"/>
+                        <core:SfTextInputLayout  Style="{StaticResource TextInputLayoutStyle}">
+                            <Entry Text="{Binding Subject}"  PlaceholderColor="DarkGray"    Placeholder="عنوان الرسالة" TextColor="Black"/>
+                        </core:SfTextInputLayout>
+                        <!-- Subject -->
+                        <Label Text="مضمون الرسالة"
+     FontAttributes="Bold"
+     TextColor="Black"/>
+
+                        <core:SfTextInputLayout
+HeightRequest="150"
+      Style="{StaticResource TextInputLayoutStyle}">
+                            
+                            <Editor Placeholder="اكتب الرسالة هنا..."
+         Text="{Binding Body}"
+         AutoSize="TextChanges" TextColor="Black"
+         HeightRequest="150"/>
+                        </core:SfTextInputLayout>
+
+                       
+
+            <!-- Busy indicator أثناء الإرسال -->
+         
+
+            <!-- Send -->
+            <buttons:SfButton Text="إرسال"
+                          Command="{Binding SendCommand}"
+                          BackgroundColor="#1976D2"
+                          TextColor="White"/>
+                    </VerticalStackLayout>
+                </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+    <core:SfBusyIndicator
+   Title="يتم إرسال الرسالة..."
+   FontAttributes="Bold"
+   FontSize="20"
+   AnimationType="SingleCircle"
+   IndicatorColor="#174DA1"
+   IsRunning="{Binding IsBusy}"
+   IsVisible="{Binding IsBusy}"
+   Style="{StaticResource BlueGradientStyle}"
+   TextColor="#174DA1" />
+    </Grid>
+</ContentPage>
